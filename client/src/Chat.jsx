@@ -27,7 +27,7 @@ export default function Chat() {
         console.log('Disconnected. Trying to reconnect.');
         connectToWs();
       }, 1000);
-    });
+    }); 
   }
   function showOnlinePeople(peopleArray) {
     const people = {};
@@ -86,12 +86,15 @@ export default function Chat() {
     };
   }
 
+
+  //to scroll down till last message by itself 
   useEffect(() => {
     const div = divUnderMessages.current;
     if (div) {
       div.scrollIntoView({behavior:'smooth', block:'end'});
     }
   }, [messages]);
+
 
   useEffect(() => {
     axios.get('/people').then(res => {
@@ -114,6 +117,7 @@ export default function Chat() {
     }
   }, [selectedUserId]);
 
+  //excluding the current logged in user , we have to dsiplay other users on the left side
   const onlinePeopleExclOurUser = {...onlinePeople};
   delete onlinePeopleExclOurUser[id];
 
@@ -156,7 +160,7 @@ export default function Chat() {
         </div>
       </div>
       <div className="flex flex-col bg-blue-50 w-2/3 p-2">
-        <div className="flex-grow">
+         <div className="flex-grow">
           {!selectedUserId && (
             <div className="flex h-full flex-grow items-center justify-center">
               <div className="text-gray-300">&larr; Select a person from the sidebar</div>
